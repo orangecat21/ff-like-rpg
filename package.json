@@ -7,7 +7,7 @@
     "build": "rm -rf dist && env NODE_ENV=production webpack",
     "lint": "eslint src/**/*.js",
     "prettier": "prettier --write .",
-    "dev": "webpack server",
+    "dev": "env NODE_ENV=development webpack server",
     "prepare": "husky install"
   },
   "repository": {
