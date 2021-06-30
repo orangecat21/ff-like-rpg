@@ -9,7 +9,8 @@
     "prettier": "prettier --write .",
     "dev": "env NODE_ENV=development webpack server",
     "prepare": "husky install",
-    "start": "node scripts/start.js"
+    "start": "node scripts/start.js",
+    "heroku:log": "heroku logs --tail -a ff-like-rpg-game"
   },
   "repository": {
     "type": "git",
