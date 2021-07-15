@@ -45,6 +45,10 @@ class ClientCell extends PositionedObject {
   findObjectsByType(type) {
     return this.objects.filter((obj) => obj.type === type);
   }
+
+  static cellIsGrass(cell) {
+    return Boolean(cell.findObjectsByType('grass').length);
+  }
 }
 
 export default ClientCell;
