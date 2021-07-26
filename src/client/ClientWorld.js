@@ -41,11 +41,13 @@ class ClientWorld extends PositionedObject {
   }
 
   render(time) {
-    const { map, worldWidth, worldHeight } = this;
+    const { levelConfig, map, worldWidth, worldHeight } = this;
 
-    for (let row = 0; row < worldHeight; row++) {
-      for (let col = 0; col < worldWidth; col++) {
-        map[row][col].render(time);
+    for (let layerId = 0; layerId < levelConfig.layers.length; layerId += 1) {
+      for (let row = 0; row < worldHeight; row++) {
+        for (let col = 0; col < worldWidth; col++) {
+          map[row][col].render(time, layerId);
+        }
       }
     }
   }
