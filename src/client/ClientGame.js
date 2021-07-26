@@ -79,7 +79,18 @@ class ClientGame {
         default:
           return;
       }
-      this.player.moveByCellCoord(changeColumn, changeRow, ClientCell.cellIsGrass);
+      if (this.player && this.player.motionProgress === 1) {
+        const canMove = this.player.moveByCellCoord(
+          changeColumn,
+          changeRow,
+          ClientCell.cellIsGrass,
+        );
+
+        if (canMove) {
+          this.player.setState(direction);
+          this.player.once('motion-stopped', () => this.player.setState('main'));
+        }
+      }
     }
   }
 
