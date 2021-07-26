@@ -6,7 +6,7 @@ class ClientGameObject extends MovableObject {
 
     const { x, y, width, height } = cfg.cell;
 
-    const world = cfg.cell.world;
+    const { world } = cfg.cell;
     const gameObjs = world.game.gameObjects;
     const objCfg = typeof cfg.objCfg === 'string' ? { type: cfg.objCfg } : cfg.objCfg;
 
@@ -49,8 +49,9 @@ class ClientGameObject extends MovableObject {
       this.cell = newCell;
       newCell.addGameObject(this);
 
-      const { x, y, width, height } = newCell;
-      Object.assign(this, { x, y, width, height });
+      this.moveTo(newCell.x, newCell.y, true, 200);
+      // const { x, y, width, height } = newCell;
+      // Object.assign(this, { x, y, width, height });
     }
   }
 
@@ -58,7 +59,7 @@ class ClientGameObject extends MovableObject {
     super.render(time);
 
     const { x, y, width, height, world } = this;
-    const engine = world.engine;
+    const { engine } = world;
 
     const { sprite, frame, states } = this.spriteCfg;
 
