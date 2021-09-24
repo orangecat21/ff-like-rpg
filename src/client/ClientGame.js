@@ -23,17 +23,22 @@ class ClientGame {
   }
 
   createEngine() {
-    return new ClientEngine(document.getElementById(this.config.tagId));
+    return new ClientEngine(document.getElementById(this.config.tagId), this);
   }
 
   createWorld() {
     return new ClientWorld(this, this.engine, levelConfig);
   }
 
+  getWorld() {
+    return this.world;
+  }
+
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
       this.world.init();
       this.engine.on('render', (_, time) => {
+        this.engine.camera.focusAtGameObject(this.player);
         this.world.render(time);
       });
       this.engine.start();
@@ -74,7 +79,18 @@ class ClientGame {
         default:
           return;
       }
-      this.player.moveByCellCoord(changeColumn, changeRow, ClientCell.cellIsGrass);
+      if (this.player && this.player.motionProgress === 1) {
+        const canMove = this.player.moveByCellCoord(
+          changeColumn,
+          changeRow,
+          ClientCell.cellIsGrass,
+        );
+
+        if (canMove) {
+          this.player.setState(direction);
+          this.player.once('motion-stopped', () => this.player.setState('main'));
+        }
+      }
     }
   }
 
